@@ -55,7 +55,7 @@ namespace Test_net
 
                 }
             } while (depositAmount <= 0);
-            toAccount.Deposit(depositAmount);
+            toBank.ExecuateTransaction(new withdrawTransaction(toAccount, depositAmount));
         }
 
         private static Account FindAccount(Bank fromBank)
@@ -86,17 +86,17 @@ namespace Test_net
             {
                 try
                 {
-                    Console.WriteLine(" Select one of the following options: \n 1. New Account \n 2. Withdraw \n 3. Deposit \n 4. Print \n 5. Quit ");
+                    Console.WriteLine(" Select one of the following options: \n 1. New Account \n 2. Withdraw \n 3. Deposit \n 4. Transfer \n 5. Print \n 6. Quit ");
                     option = Convert.ToInt32(Console.ReadLine());
                 }
                 catch
                 {
-                    Console.WriteLine(" That's not right choose an option between 1-5: ");
+                    Console.WriteLine(" That's not right choose an option between 1-6: ");
                     option = -1;
 
                 }
 
-            } while (option < 1 || option > 5);
+            } while (option < 1 || option > 6);
 
             return (MenuOption)(option - 1);
         }
@@ -105,8 +105,7 @@ namespace Test_net
             MenuOption userSelection;
             Bank Ba = new Bank();
 
-            Account zenabsaccount = new Account("zaneb", 500000);
-            Ba.AddAccount(zenabsaccount);
+
 
             do
             {
@@ -128,7 +127,14 @@ namespace Test_net
                     case MenuOption.Deposit:
                         DoDeposit(Ba);
                         break;
+                    case MenuOption.transfer:
+                        Account fromAccount = FindAccount(Ba);
+                        if (fromAccount == null) break;
 
+                        Console.Write("Enter amount to transfer ");
+                        decimal amountToTransfer = decimal.Parse(Console.ReadLine());
+                        Ba.ExecuateTransaction(new transfertransaction(fromAccount, new Account("zaneb", 500000), amountToTransfer));
+                        break;
                     case MenuOption.Print:
                         DoPrint(Ba);
                         break;
@@ -146,6 +152,7 @@ namespace Test_net
         NewAccount,
         Withdraw,
         Deposit,
+        transfer,
         Print,
         Quit,
 

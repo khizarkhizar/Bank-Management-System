@@ -8,6 +8,7 @@ public class withdrawTransaction
     private decimal _amount;
     private bool _executed = false;
     private bool _success = false;
+    private bool _reversed = false;
     //TODO: add reversed
     public bool Success
     {
@@ -16,6 +17,30 @@ public class withdrawTransaction
             return _success;
         }
     }
+    public bool Executed
+    {
+        get
+        {
+
+            return _executed;
+
+        }
+
+    }
+
+    public bool Reversed
+    {
+        get
+        {
+            return _reversed;
+        }
+
+
+
+
+
+    }
+
     public Account Acc
     {
         get
@@ -45,6 +70,27 @@ public class withdrawTransaction
         //TODO: Throw an exception if the transaction has been reversed
         //TODO: Remember that we have reversed
         //TODO: Then rollback by reversing actions from execute
+
+        if (!_executed)
+
+        {
+
+            throw new Exception("Not executed throws an error");
+
+        }
+
+
+
+
+
+        if (!_reversed)
+        {
+
+            throw new Exception("Cannot execute this and trasncation is rolled back");
+
+        }
+
+
     }
     public void Print()
     {

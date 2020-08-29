@@ -31,20 +31,48 @@ public class Bank
     {
 
 
+
+
+
         WD.Execute();
+        if (WD.Success)
+        {
+
+            WD.Print();
+        }
+
+        else
+        {
+
+            WD.Rollback();
+
+        }
 
 
-
-        WD.Print();
     }
     public void ExecuateTransaction(DepsiteTransaction DT)
     {
+        DT.Execute();
+        if (DT.Success)
+        {
+
+            DT.Print();
+        }
+        else
+
+        {
+
+            DT.Rollback();
+
+        }
 
     }
-    // public void ExecuateTransaction(TransTransaction TT)
-    // {
+    public void ExecuateTransaction(transfertransaction TT)
+    {
+        TT.Execution();
 
-    // }
+
+    }
 
 
 

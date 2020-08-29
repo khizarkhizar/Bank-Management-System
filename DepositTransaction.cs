@@ -8,12 +8,29 @@ public class DepsiteTransaction
     private decimal _amount;
     private bool _executed = false;
     private bool _success = false;
+
+    private bool _reversed = false;
     //TODO: add reversed
     public bool Success
     {
         get
         {
             return _success;
+        }
+    }
+    public bool Executed
+    {
+        get
+        {
+
+            return _executed;
+        }
+    }
+    public bool Reversed
+    {
+        get
+        {
+            return _reversed;
         }
     }
     //  Need reversed and executed property
@@ -37,9 +54,21 @@ public class DepsiteTransaction
         //TODO: Throw an exception if the transaction has been reversed
         //TODO: Remember that we have reversed
         //TODO: Then rollback by reversing actions from execute
+
+        if (!_executed)
+        {
+            throw new Exception("Not executed throws an error");
+        }
+
+
+        if (!_reversed)
+        {
+            throw new Exception("Cannot execute this and trasncation is rolled back");
+
+        }
     }
     public void Print()
     {
-        //TODO: print here
+        Console.WriteLine("Hi: " + _account.Name + " Your account balance is: $" + _account.Balance);
     }
 }
